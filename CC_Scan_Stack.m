@@ -53,8 +53,8 @@ failure = 0;
 
 %Loop over data for requested time and stack cross correlation functions
 event_match_printout = sprintf('./%s/%s/TEL_%s_to_%s_events.csv',base_folder,result_folder,datestr(start_date),datestr(end_date));
-event_match_matlab = sprintf('./%s/%s_to_%s_events.mat',base_folder,datestr(start_date),datestr(end_date));
-events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Template'};
+event_match_matlab = sprintf('./%s/%s/TEL_%s_to_%s_events.mat',base_folder,result_folder,datestr(start_date),datestr(end_date));
+events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Network','Template', 'Phase','MAD','CC Relation to MAD'};
 row = 2;
 repeat = 1;
 total_detections = 0;
@@ -63,7 +63,7 @@ total_detections = 0;
 
 for template_count = 1:length(template_list(:,1))
     single_template = template_list(template_count,:);
-    template_events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Template'};
+    template_events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Network','Template', 'Phase','MAD','CC Relation to MAD'};
     template_row = 2;
     template_detections = 0;
     total_event_number = {};
@@ -77,10 +77,11 @@ for template_count = 1:length(template_list(:,1))
         template = station_specific_template.template;
         station = station_specific_template.station;
         network = station_specific_template.network;
+        phase = station_specific_template.trigger;
         
         station_match_printout = sprintf('%s/%s/%s_%s_to_%s_%s_events.csv',base_folder,result_folder,template,datestr(start_date),datestr(end_date),station);
         station_match_matlab = sprintf('%s/%s/%s_%s_to_%s_%s_events.mat',base_folder,result_folder,template,datestr(start_date),datestr(end_date),station);
-        station_events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Template'};
+        station_events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Network','Template', 'Phase','MAD','CC Relation to MAD'};
         station_row = 2;
         station_detections = 0;
         
@@ -93,6 +94,7 @@ for template_count = 1:length(template_list(:,1))
             end_time = time + CC_increment;
             fprintf('Start Time: %s\n',datestr(start_time));
             fprintf('End Time: %s\n',datestr(end_time));
+            fprintf('Operation Time/Date: %s\n',datestr(clock));
             CC_Stacked_savename = sprintf('%s/%s/CC_Stacked_%s_%s_%s.mat',base_folder,station_stack_folder,template,station,datestr(start_time,30));
             if exist(CC_Stacked_savename,'file') == 2
                 fprintf('Previous Stacked Cross Correlation found\n');
@@ -115,21 +117,35 @@ for template_count = 1:length(template_list(:,1))
                         events{row,4} = DisplayTime;
                         events{row,5} = threshold;
                         events{row,6} = station;
-                        events{row,7} = template;
+                        events{row,7} = network;
+                        events{row,8} = template;
+                        events{row,9} = phase;
+                        events{row,10} = threshold/9;
+                        events{row,11} = PeakCorr(z)/(threshold/9);
                         station_events{station_row,1} = TimeIndex(z);
                         station_events{station_row,2} = PeakCorr(z);
                         station_events{station_row,3} = datestr(DisplayTime,'dd mmmm yyyy HH:MM:SS.FFF');
                         station_events{station_row,4} = DisplayTime;
                         station_events{station_row,5} = threshold;
                         station_events{station_row,6} = station;
-                        station_events{station_row,7} = template;
+                        station_events{station_row,7} = network;
+                        station_events{station_row,8} = template;
+                        station_events{station_row,9} = phase;
+                        station_events{station_row,10} = threshold/9;
+                        station_events{station_row,11} = PeakCorr(z)/(threshold/9);
                         template_events{template_row,1} = TimeIndex(z);
                         template_events{template_row,2} = PeakCorr(z);
                         template_events{template_row,3} = datestr(DisplayTime,'dd mmmm yyyy HH:MM:SS.FFF');
                         template_events{template_row,4} = DisplayTime;
                         template_events{template_row,5} = threshold;
                         template_events{template_row,6} = station;
-                        template_events{template_row,7} = template;
+                        template_events{template_row,7} = network;
+                        template_events{template_row,8} = template;
+                        template_events{template_row,9} = phase;
+                        template_events{template_row,10} = threshold/9;
+                        template_events{template_row,11} = PeakCorr(z)/(threshold/9);
+                        
+                        
                         row = row + 1;
                         station_row = station_row + 1;
                         template_row = template_row + 1;

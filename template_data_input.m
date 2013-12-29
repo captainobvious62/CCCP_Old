@@ -11,54 +11,73 @@
 
 
 %Quick attempt to pick out events using MCWV 12/20
+% T01 = struct();
+% T01.station = 'MCWV';
+% T01.network = 'US';
+% T01.pWaveArrival = '2011-12-31 20:05:28.81';
+% T01.sWaveArrival = '2011-12-31 20:05:48.650';
+% T01.trigger = 'P';
+% T01.sideWindows = [1 20];
+% T01.template = 'M4_Mainshock_P';
+% T01.channel_list = ['BH1';'BH2';'BHZ'];
+% T01.channel_list = cellstr(T01.channel_list);
+%
+% T01(2).station = 'N54A';
+% T01(2).network = 'TA';
+% T01(2).pWaveArrival = '2011-12-31 20:05:10.32';
+% T01(2).sWaveArrival = '2011-12-31 20:05:17.70';
+% T01(2).trigger = 'P';
+% T01(2).sideWindows = [1 20];
+% T01(2).template = 'M4_Mainshock_P';
+% T01(2).channel_list = ['BHE';'BHN';'BHZ'];
+% T01(2).channel_list = cellstr(T01(2).channel_list);
+
 T01 = struct();
 T01.station = 'MCWV';
 T01.network = 'US';
 T01.pWaveArrival = '2011-12-31 20:05:28.81';
 T01.sWaveArrival = '2011-12-31 20:05:48.650';
-T01.trigger = 'P';
-T01.sideWindows = [1 20];
-T01.template = 'M4_Mainshock_P';
+T01.trigger = 'S';
+T01.sideWindows = [15 5];
+T01.template = 'M4_Mainshock_S';
 T01.channel_list = ['BH1';'BH2';'BHZ'];
 T01.channel_list = cellstr(T01.channel_list);
+
+
+
 
 T01(2).station = 'N54A';
 T01(2).network = 'TA';
 T01(2).pWaveArrival = '2011-12-31 20:05:10.32';
 T01(2).sWaveArrival = '2011-12-31 20:05:17.70';
-T01(2).trigger = 'P';
-T01(2).sideWindows = [1 20];
-T01(2).template = 'M4_Mainshock_P';
+T01(2).trigger = 'S';
+T01(2).sideWindows = [15 5];
+T01(2).template = 'M4_Mainshock_S';
 T01(2).channel_list = ['BHE';'BHN';'BHZ'];
 T01(2).channel_list = cellstr(T01(2).channel_list);
 
+
+%25 November 2011 event - previous baseline template. don't recall P wave arrival offhand.
 T02 = struct();
-T02.station = 'MCWV';
-T02.network = 'US';
-T02.pWaveArrival = '2011-12-31 20:05:28.81';
-T02.sWaveArrival = '2011-12-31 20:05:48.650';
+T02.station = 'N54A';
+T02.network = 'TA';
+T02.pWaveArrival = '2011-11-25 06:47:37.400';
+T02.sWaveArrival = '2011-11-25 06:47:45.050';
+T02.template = '25_Nov';
 T02.trigger = 'S';
 T02.sideWindows = [15 5];
-T02.template = 'M4_Mainshock_S';
-T02.channel_list = ['BH1';'BH2';'BHZ'];
+T02.channel_list = ['BHE';'BHN';'BHZ'];
 T02.channel_list = cellstr(T02.channel_list);
 
-
-
-
-T02(2).station = 'N54A';
-T02(2).network = 'TA';
-T02(2).pWaveArrival = '2011-12-31 20:05:10.32';
-T02(2).sWaveArrival = '2011-12-31 20:05:17.70';
+T02(2).station = 'MCWV';
+T02(2).network = 'US';
+T02(2).pWaveArrival = '2011-11-25 06:47:55.730';
+T02(2).sWaveArrival = '2011-11-25 06:48:17.750';
+T02(2).template = '25_Nov';
 T02(2).trigger = 'S';
 T02(2).sideWindows = [15 5];
-T02(2).template = 'M4_Mainshock_S';
-T02(2).channel_list = ['BHE';'BHN';'BHZ'];
+T02(2).channel_list = ['BH1';'BH2';'BHZ'];
 T02(2).channel_list = cellstr(T02(2).channel_list);
-
-
-
-
 
 
 
@@ -257,7 +276,7 @@ T02(2).channel_list = cellstr(T02(2).channel_list);
 %and ultimately stacked by the move out stacking script
 %(CC_Scan_All_Stations_Stacked.m and family). It is poorly designed - I know
 
-template_list = [T01 T02];
+template_list = [T01;T02];
 %For P Wave
 for j = 1:length(template_list)
     item = template_list(j);
@@ -283,10 +302,10 @@ for j = 1:length(template_list)
             
         end
     end
-        for i = 1:length(item);
-            item(i).moveOut = (datenum(item(i).pWaveArrival))*86400 - initial*86400;
-        end
+    for i = 1:length(item);
+        item(i).moveOut = (datenum(item(i).pWaveArrival))*86400 - initial*86400;
     end
+end
 
 
 

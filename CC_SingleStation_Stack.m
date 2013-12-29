@@ -51,7 +51,7 @@ for time = start_date:CC_increment:end_date
     end_time = time + CC_increment;
     fprintf('Start Time: %s\n',datestr(start_time));
     fprintf('End Time: %s\n',datestr(end_time));
-    
+    fprintf('Operation Time/Date: %s\n',datestr(clock));
     
     for template_count = 1:length(template_list(:,1))
         single_template = template_list(template_count,:);

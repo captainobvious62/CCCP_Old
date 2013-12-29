@@ -1,10 +1,11 @@
 function ws = convertTraces(traces)
    for i = 1:length(traces)
        w = waveform;
+      %Use initial location for all forms
        myscnl = scnlobject(char(traces(i).station), ...
            char(traces(i).channel), ...
            char(traces(i).network), ...
-           char(traces(i).location));
+           char(traces(1).location));
        w = set(w,'scnlobject',myscnl,'freq',traces(i).sampleRate); %, 'start', datenum(startDateStr, 'yyyy-mm-dd HH:MM:SS.FFF'));
        w = set(w,'start', datestr(traces(i).startTime));
        w = addfield(w,'end',traces(i).endTime);
@@ -22,5 +23,7 @@ function ws = convertTraces(traces)
        w = addfield(w,'calib_applied','NO');
        w = set(w,'data', traces(i).data);
        w = addfield(w,'sacPZ',traces(i).sacpz);
+       ws = addfield(w,'calib_applied','NO');
        ws(i) = w;
    end
+end

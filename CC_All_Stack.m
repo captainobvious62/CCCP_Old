@@ -113,6 +113,7 @@ for time = start_date:CC_increment:(end_date-CC_increment)
                         fprintf('Stacked Cross Correlation loaded\n');
                         fprintf('Current day: %s\n',CC_Stacked_savename);
                         fprintf('   Next day: %s\n',CC_Stacked_following_day);
+                        fprintf('Operation Time/Date: %s\n',datestr(clock));
                         MO_start_time = get(Stacked_CC,'start') + move_out_times(station_count)/86400;
                         
                         MO_adjusted_CC = extract(Stacked_CC,'TIME',MO_start_time,end_time);

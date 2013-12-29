@@ -18,15 +18,22 @@ correlation_object_folder = 'CorrelationObject';
 month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %Starting Date/Time
+% start_year = 2010;
+% start_month = 11;
+% start_day = 06;
+% start_minute = 00;
+% start_second = 00;
+
 start_year = 2010;
-start_month = 11;
-start_day = 06;
+start_month = 12;
+start_day = 01;
 start_minute = 00;
 start_second = 00;
 
+
 %Ending Date/Time
 end_year = 2012;
-end_month = 05;
+end_month = 03;
 end_day = 01;
 end_minute = 00;
 end_second = 00;
@@ -65,8 +72,10 @@ Master_CC_Scan_Threshold = 0.5;
 
 %Correlation object settings
 %Time before and after S-Wave pick to grab
-before_S_Wave = time_before;
-after_S_Wave = time_after;
+before_P_Wave = 5;
+after_P_Wave = 25;
+before_S_Wave = 60;
+after_S_Wave = 30;
 correlation_channel = 'BHZ';
 
 

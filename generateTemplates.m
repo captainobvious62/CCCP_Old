@@ -75,13 +75,15 @@ for template_count = 1:length(template_list(:,1))
                     try
                         fprintf('Downloading template\n')
                         Temp = irisFetch.Traces(network,station,location, channel, starttime, endtime,'verbose','includePZ');
-                        wf_Temp = convertTraces(Temp);
+                        wf_Temp = convertTracesRM_IR(Temp);
                     catch exception
                         fprintf('Trying again....\n');
                     end
+                    
+                    
                 end
-                wf_Temp = fillgaps(wf_Temp,0);
-                wf_Temp = filtfilt(filter,wf_Temp);
+               
+                wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);
                 save(template_savename,'wf_Temp');
                 fprintf('Template %s saved.\n',template_savename)
             end

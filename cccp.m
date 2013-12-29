@@ -34,3 +34,5 @@ CC_SingleChannel_Java
 CC_SingleStation_Stack
 % Scan individual station stacks for matches
 CC_Scan_Stack
+%Build Correlation Objects
+generateCorrelationObject

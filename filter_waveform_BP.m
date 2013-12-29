@@ -6,6 +6,7 @@ if upper > maximum;
     upper = maximum;
 end
 filter =  filterobject('B',[lower upper], 4);
-
 WF = filtfilt(filter,WF);
+WF = addfield(WF,'FILTER_APPLIED','YES');
+WF = addfield(WF,'FILTER',filter);
 output = WF;
