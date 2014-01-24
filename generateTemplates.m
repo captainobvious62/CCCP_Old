@@ -3,7 +3,7 @@
 %Code is optimized for Debian based Linux
 %Grabs snippets from picks in events file
 %Loads into correlation object
-%At the moment, offset is +/- 10 sec.
+%At the moment, offset is +/- 10 sec(ish).
 %Later on, this will be defined in the input file
 
 %Snippet Settings
@@ -49,8 +49,8 @@ for template_count = 1:length(template_list(:,1))
             time_after = station_specific_template.sideWindows(2);
             starttime = P_Pick_time - (time_before/86400);
             endtime = P_Pick_time + (time_after/86400);
-        elseif station_specific_template.trigger == 'S'            
-            %For S Wave
+        elseif station_specific_template.trigger == 'S'
+        %For S Wave
             time_before = station_specific_template.sideWindows(1);
             time_after = station_specific_template.sideWindows(2);
             starttime = S_Pick_time - (time_before/86400);
@@ -60,7 +60,7 @@ for template_count = 1:length(template_list(:,1))
         template = station_specific_template.template;
         station = station_specific_template.station;
         network = station_specific_template.network;
-
+        
         
         for chan_count = 1:numberofchannels
             channel = station_specific_template.channel_list{chan_count};
@@ -78,17 +78,18 @@ for template_count = 1:length(template_list(:,1))
                         wf_Temp = convertTracesRM_IR(Temp);
                     catch exception
                         fprintf('Trying again....\n');
-                    end
-                    
-                    
+                    end      
                 end
-               
-                wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);
+                if strcmp(channel(length(channel):length(channel)),'Z') == 1
+                    wf_Temp = addfield(wf_Temp,'TRIGGER',datenum(station_specific_template.pWaveArrival));
+                else
+                    wf_Temp = addfield(wf_Temp,'TRIGGER',datenum(station_specific_template.sWaveArrival));
+                end
+                %wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);
                 save(template_savename,'wf_Temp');
                 fprintf('Template %s saved.\n',template_savename)
             end
-        end       
-    end
-
+        end
+    end  
 end
-    
+

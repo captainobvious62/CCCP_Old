@@ -83,29 +83,29 @@ for time = start_date:CC_increment:end_date
                     if strcmp(channel,'BHE') == 1
                         if time > datenum(check.Channels(1,1).EndDate)
                             channel = 'BH1';
-                            endWF_trace = convertTracesRM_IR(WF_trace);
+                        end;
+                    end
+                    if strcmp(channel,'BHN') == 1
+                        if time > datenum(check.Channels(1,1).EndDate)
+                            channel = 'BH2';
                         end
-                        if strcmp(channel,'BHN') == 1
-                            if time > datenum(check.Channels(1,1).EndDate)
-                                channel = 'BH2';
-                            end
+                    end
+                    if strcmp(channel,'BH1') == 1
+                        if time < datenum(check.Channels(1,1).EndDate)
+                            channel = 'BHE';
                         end
-                        if strcmp(channel,'BH1') == 1
-                            if time < datenum(check.Channels(1,1).EndDate)
-                                channel = 'BHE';
-                            end
-                        end
-                        if strcmp(channel,'BH2') == 1
-                            if time < datenum(check.Channels(1,1).EndDate)
-                                channel = 'BHN';
-                            end
+                    end
+                    if strcmp(channel,'BH2') == 1
+                        if time < datenum(check.Channels(1,1).EndDate)
+                            channel = 'BHN';
                         end
                     end
                 end
+                
                 %End idiot IRIS compensation (US Stations change from BHE/BHN/BHZ to BH1/BH2/BHZ in the middle of 2011)
                 %Check to see if previous CC has been generated
                 CC_EXIST = 0;
-    
+                
                 if exist(CC_savename,'file') == 2
                     load(CC_savename);
                     if isempty(CC) == 0;
@@ -117,6 +117,7 @@ for time = start_date:CC_increment:end_date
                     
                     load(template_savename);
                     fprintf('Template %s loaded.\n',template_savename);
+                    wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);
                     %Check to see if waveform has been downloaded before
                     if exist(WF_savename,'file') == 2
                         fprintf('Previously saved waveform found\n');
@@ -127,6 +128,8 @@ for time = start_date:CC_increment:end_date
                         WF_filtered = fillgaps(WF_filtered,0);
                         WF_filtered = filter_waveform_BP(WF_filtered,lower_band,upper_band);
                         [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
+
+                        %match = mastercorr_extract(WF_filtered)
                         CC = addfield(CC,'isCrossCorrelation', true);
                         CC = fillgaps(CC,0);
                         CC = set(CC,'location',location);
@@ -183,6 +186,7 @@ for time = start_date:CC_increment:end_date
                             save(WF_savename,'WF_trace');
                             fprintf('%s saved.\n',WF_savename);
                             [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,Master_CC_Scan_Threshold);
+                            %match = mastercorr_extract(WF_filtered)
                             CC = addfield(CC,'isCrossCorrelation', true);
                             CC = fillgaps(CC,0);
                             CC = set(CC,'location',location);
@@ -201,6 +205,7 @@ for time = start_date:CC_increment:end_date
                             save(CC_savename,'CC');
                             fprintf('Placeholder(zeros) %s saved.\n',CC_savename);
                             [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
+                            %match = mastercorr_extract(WF_filtered)
                             CC = addfield(CC,'isCrossCorrelation', true);
                             CC = fillgaps(CC,0);
                             CC = set(CC,'location',location);
