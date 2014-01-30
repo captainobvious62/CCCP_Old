@@ -11,30 +11,30 @@ all_stack_folder = 'ALLStack';
 station_stack_folder = 'StationStack';
 check_folder = 'check';
 correlation_object_folder = 'CorrelationObject';
-javaaddpath(sprintf('%s/IRIS-WS-2.0.2.jar',base_folder));
+javaaddpath(sprintf('%s/IRIS-WS-2.0.4.jar',base_folder));
 
 %Time Settings
 %All times for program are in UTC
 month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %Starting Date/Time
-% start_year = 2010;
-% start_month = 12;
-% start_day = 01;
-% start_minute = 00;
-% start_second = 00;
-
 start_year = 2010;
-start_month = 10;
+start_month = 03;
 start_day = 01;
 start_minute = 00;
 start_second = 00;
 
+% start_year = 2011;
+% start_month = 11;
+% start_day = 20;
+% start_minute = 00;
+% start_second = 00;
+
 
 %Ending Date/Time
 end_year = 2011;
-end_month = 11;
-end_day = 25;
+end_month = 01;
+end_day = 01;
 end_minute = 00;
 end_second = 00;
 

@@ -36,3 +36,5 @@ CC_SingleStation_Stack
 CC_Scan_Stack
 %Build Correlation Objects
 generateCorrelationObject
+%Find P and S wave Arrival Times
+getArrivalTimes

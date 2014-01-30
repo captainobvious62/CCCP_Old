@@ -106,7 +106,9 @@
 
 
 
-% 
+%%
+%25 November 2011
+
 % T02 = struct();
 % T02.station = 'N54A';
 % T02.network = 'TA';
@@ -118,7 +120,69 @@
 % T02.channel_list = ['BHE';'BHN';'BHZ'];
 % T02.channel_list = cellstr(T02.channel_list);
 
-
+% 
+% T02(2).station = 'ACSO';
+% T02(2).network = 'US';
+% T02(2).pWaveArrival = '2011-11-25 06:48:01.310';
+% T02(2).sWaveArrival = '2011-11-25 06:48:25.900';
+% T02(2).template = '25_Nov';
+% T02(2).trigger = 'S';
+% T02(2).sideWindows = [30 5];
+% T02(2).channel_list = ['BH1';'BH2';'BHZ'];
+% T02(2).channel_list = cellstr(T02(2).channel_list);
+% 
+% T02(3).station = 'O56A';
+% T02(3).network = 'TA';
+% T02(3).pWaveArrival = '2011-11-25 06:47:59.675';
+% T02(3).sWaveArrival = '2011-11-25 06:48:26.925';
+% T02(3).trigger = 'S';
+% T02(3).sideWindows = [30 5];
+% T02(3).template = '25_Nov';
+% T02(3).channel_list = ['BHE';'BHN';'BHZ'];
+% T02(3).channel_list = cellstr(T02(3).channel_list);
+% 
+% T02(4).station = 'MCWV';
+% T02(4).network = 'US';
+% T02(4).pWaveArrival = '2011-11-25 06:47:55.730';
+% T02(4).sWaveArrival = '2011-11-25 06:48:17.750';
+% T02(4).template = '25_Nov';
+% T02(4).trigger = 'S';
+% T02(4).sideWindows = [25 5];
+% T02(4).channel_list = ['BH1';'BH2';'BHZ'];
+% T02(4).channel_list = cellstr(T02(4).channel_list);
+% 
+% T02(5).station = 'ERPA';
+% T02(5).network = 'US';
+% T02(5).pWaveArrival = '2011-11-25 06:47:47.400';
+% T02(5).sWaveArrival = '2011-11-25 06:48:01.625';
+% T02(5).trigger = 'S';
+% T02(5).sideWindows = [20 5];
+% T02(5).template = '25_Nov';
+% T02(5).channel_list = ['BH1';'BH2';'BHZ'];
+% T02(5).channel_list = cellstr(T02(5).channel_list);
+% 
+% T02 = struct();
+% T02.station = 'MCWV';
+% T02.network = 'US';
+% T02.pWaveArrival = '2011-11-25 06:47:55.730';
+% T02.sWaveArrival = '2011-11-25 06:48:17.750';
+% T02.template = '25_Nov';
+% T02.trigger = 'S';
+% T02.sideWindows = [25 5];
+% T02.channel_list = ['BH1';'BH2';'BHZ'];
+% T02.channel_list = cellstr(T02.channel_list);
+% 
+% T02(2).station = 'ERPA';
+% T02(2).network = 'US';
+% T02(2).pWaveArrival = '2011-11-25 06:47:47.400';
+% T02(2).sWaveArrival = '2011-11-25 06:48:01.625';
+% T02(2).trigger = 'S';
+% T02(2).sideWindows = [20 5];
+% T02(2).template = '25_Nov';
+% T02(2).channel_list = ['BH1';'BH2';'BHZ'];
+% T02(2).channel_list = cellstr(T02(2).channel_list);
+% 
+% 
 T02 = struct();
 T02.station = 'ACSO';
 T02.network = 'US';
@@ -130,40 +194,15 @@ T02.sideWindows = [30 5];
 T02.channel_list = ['BH1';'BH2';'BHZ'];
 T02.channel_list = cellstr(T02.channel_list);
 
-% T02 = struct();
-% T02.station = 'O56A';
-% T02.network = 'TA';
-% T02.pWaveArrival = '2011-11-25 06:47:59.675';
-% T02.sWaveArrival = '2011-11-25 06:48:26.925';
-% T02.trigger = 'S';
-% T02.sideWindows = [30 5];
-% T02.template = '25_Nov';
-% T02.channel_list = ['BHE';'BHN';'BHZ'];
-% T02.channel_list = cellstr(T02.channel_list);
-% 
 
 
 
-T02(2).station = 'MCWV';
-T02(2).network = 'US';
-T02(2).pWaveArrival = '2011-11-25 06:47:55.730';
-T02(2).sWaveArrival = '2011-11-25 06:48:17.750';
-T02(2).template = '25_Nov';
-T02(2).trigger = 'S';
-T02(2).sideWindows = [25 5];
-T02(2).channel_list = ['BH1';'BH2';'BHZ'];
-T02(2).channel_list = cellstr(T02(2).channel_list);
 
-% %After this point numbers are just [bad] guesses - mostly need the IR corrected waveforms for now
-T02(3).station = 'ERPA';
-T02(3).network = 'US';
-T02(3).pWaveArrival = '2011-11-25 06:47:47.400';
-T02(3).sWaveArrival = '2011-11-25 06:48:01.625';
-T02(3).trigger = 'S';
-T02(3).sideWindows = [20 5];
-T02(3).template = '25_Nov';
-T02(3).channel_list = ['BH1';'BH2';'BHZ'];
-T02(3).channel_list = cellstr(T02(3).channel_list);
+
+
+
+
+
 
 % T02(4).station = 'UPAO';
 % T02(4).network = 'PE';

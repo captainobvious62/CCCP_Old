@@ -45,8 +45,6 @@ fprintf('Event listing loaded\n');
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1));
     single_template = template_list(template_count,:);
-    
-    
     for station_count = 1:length(single_template);
         station_specific_template = single_template(station_count);
         numberofchannels = length(station_specific_template.channel_list);
@@ -62,7 +60,9 @@ for template_count = 1:length(template_list(:,1));
             fprintf('Phase: %s\n',phase);
             fprintf('Correlating Channel: %s\n',channel);
             fprintf('Operation Time/Date: %s\n',datestr(clock));
-            
+            template_channel = channel;
+            check_savename = sprintf('%s/%s/DATA_%s_%s.mat',base_folder,check_folder,station,channel);
+            load(check_savename);
             correlation_object_savename = sprintf('./%s/%s/CO_%s_%s_%s_%s',base_folder,correlation_object_folder,template,phase,station,channel);
             correlation_object = correlation();
             pick_number = 0;
@@ -80,6 +80,29 @@ for template_count = 1:length(template_list(:,1));
                     starttime = pick_time - (before_time/86400);
                     endtime = pick_time + (after_time/86400);
                     WF_Snippet = waveform();
+                    counts = 0;
+                    time = pick_time;
+                    if strcmp(network,'US') == 1
+                        if strcmp(channel,'BHE') == 1 || strcmp(channel,'BH1') == 1
+                            check_savename = sprintf('%s/%s/DATA_%s_%s.mat',base_folder,check_folder,station,'BHE');
+                            load(check_savename);
+                            if time < datenum(check.Channels(1,1).EndDate)
+                                channel = 'BHE';
+                            elseif time > datenum(check.Channels(1,1).EndDate)
+                                channel = 'BH1';
+                            end;
+                        end
+                        if strcmp(channel,'BHN') == 1 || strcmp(channel,'BH2') == 1;
+                            check_savename = sprintf('%s/%s/DATA_%s_%s.mat',base_folder,check_folder,station,'BHE');
+                            load(check_savename);
+                            
+                            if time < datenum(check.Channels(1,1).EndDate)
+                                channel = 'BHN';
+                            elseif time > datenum(check.Channels(1,1).EndDate)
+                                channel = 'BH2';
+                            end
+                        end
+                    end
                     while isempty(WF_Snippet) == 1
                         try
                             fprintf('Downloading trace\n')
@@ -88,53 +111,37 @@ for template_count = 1:length(template_list(:,1));
                         catch exception
                             fprintf('Trying again....\n');
                         end
+                        if counts > 4;
+                            break
+                        end
+                        counts = counts + 1;
                     end
-                    
-                    %Not sure if we just want to add a filter function later
-                    %and not filter it in situ
-                    WF_Snippet = fillgaps(WF_Snippet,0);
-                    WF_Snippet = removeIR(WF_Snippet);
-                    WF_Snippet = filter_waveform_BP(WF_Snippet,lower_band,upper_band);
-                    WF_Snippet = addfield(WF_Snippet,'Rel_MAD',events{events_count,11});
-                    WF_Snippet = addfield(WF_Snippet,'Phase',events{events_count,9});
-                    WF_Snippet = correlation(WF_Snippet);
-                    if pick_number == 0;
-                        correlation_object = WF_Snippet;
+                    if isempty(WF_Snippet) == 1
+                        fprintf('No Data\n');
                     else
-                        correlation_object = cat(correlation_object,WF_Snippet);
+                        %Not sure if we just want to add a filter function later
+                        %and not filter it in situ
+                        WF_Snippet = fillgaps(WF_Snippet,0);
+                        WF_Snippet = removeIR(WF_Snippet);
+                        WF_Snippet = filter_waveform_BP(WF_Snippet,lower_band,upper_band);
+                        WF_Snippet = addfield(WF_Snippet,'Rel_MAD',events{events_count,11});
+                        WF_Snippet = addfield(WF_Snippet,'Phase',events{events_count,9});
+                        WF_Snippet = correlation(WF_Snippet);
+                        
+                        if pick_number == 0;
+                            correlation_object = WF_Snippet;
+                        else
+                            correlation_object = cat(correlation_object,WF_Snippet);
+                        end
+                        pick_number = pick_number + 1;
                     end
-                    pick_number = pick_number + 1;
                 end
                 
             end
             if pick_number == 0;
                 fprintf('No events found\n');
             else
-                template_savename = sprintf('%s/%s/%s_%s_%s.mat',base_folder,template_folder,template,station,channel);
-                if strcmp(network,'US') == 1
-                    check_savename = sprintf('%s/%s/DATA_%s_%s.mat',base_folder,check_folder,station,channel);
-                    load(check_savename);
-                    if strcmp(channel,'BHE') == 1
-                        if time > datenum(check.Channels(1,1).EndDate)
-                            channel = 'BH1';
-                        end;
-                    end
-                    if strcmp(channel,'BHN') == 1
-                        if time > datenum(check.Channels(1,1).EndDate)
-                            channel = 'BH2';
-                        end
-                    end
-                    if strcmp(channel,'BH1') == 1
-                        if time < datenum(check.Channels(1,1).EndDate)
-                            channel = 'BHE';
-                        end
-                    end
-                    if strcmp(channel,'BH2') == 1
-                        if time < datenum(check.Channels(1,1).EndDate)
-                            channel = 'BHN';
-                        end
-                    end
-                end
+                template_savename = sprintf('%s/%s/%s_%s_%s.mat',base_folder,template_folder,template,station,template_channel);
                 load(template_savename)
                 fprintf('Template %s loaded.\n',template_savename);
                 wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);

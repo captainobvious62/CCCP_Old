@@ -179,6 +179,8 @@ for time = start_date:CC_increment:end_date
                             WF_trace = convertTracesRM_IR(WF_trace);
                             WF_trace = combine(WF_trace);
                             WF_trace = fillgaps(WF_trace,0);
+                            WF_trace = set(WF_trace,'IR_CORRECTED','NO');
+                            
                             %Test of new filter function to enable use
                             %of varied sensitivities
                             WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
