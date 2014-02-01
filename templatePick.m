@@ -21,10 +21,18 @@ datetick('x','HH:MM:SS.FFF')
 fprintf('Please Pick Arrival Times\n')
 eventPWave = '2011-03-17 10:53:20.075';
 eventSWave =  '2011-03-17 10:53:27.325';
-before_time = 30;%s
-after_time = 30;%s
+before_time = 30/86400;%s
+after_time = 30/86400;%s
 lower_band = 1
 upper_band = 100
+
+template_snippet = irisFetch.Traces(closest_station.NetworkCode,closest_station.StationCode,location, channel, datestr(datenum(eventSWave) - before_time), datestr(datenum(eventSwave) + after_time),'verbose','includePZ');
+template_snippet = convert_tracesRM_IR(template_snippet);
+
+
+
+
+
 pick_number = 0;
 for i = 1:length(list)
     station = list(i).StationCode;
@@ -86,3 +94,6 @@ for i = 1:length(list)
         pick_number = pick_number + 1;
     end
 end
+
+
+

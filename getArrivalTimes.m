@@ -1,6 +1,7 @@
 %CCCP
 %Arrival Time Picker
 %Adjusts snippets and determines arrivals
+%Need to incorporate a toss out threshold for waveforms to temporally close
 
 
 %Read in written/generated template data from file
@@ -81,9 +82,9 @@ for template_count = 1:length(template_list(:,1));
                 arrivals  = 'S';
                 template_waveform = correlation(template_waveform);
                 sWaveArrival = station_specific_template.sWaveArrival;
-                timeAdjust = cat(C,template_waveform);
-                timeAdjust = xcorr(timeAdjust);
-                %timeAdjust = xcorr(timeAdjust,'interp');
+                timeAdjust = cat(C,template_waveform)
+                timeAdjust = xcorr(timeAdjust)
+                %timeAdjust = xcorr(timeAdjust,'interp')
                 timeAdjust = adjusttrig(timeAdjust,'index');
                 S_Arrivals_E = datestr(get(timeAdjust,'trig'),'yyyy-mm-dd HH:MM:SS.FFF');
                 
