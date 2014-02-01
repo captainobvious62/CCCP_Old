@@ -5,7 +5,7 @@
 %waveforms can be gathered
 %Outputs a list of stations within the given radius, as well as the closest
 %station to use for picks for the determinination of template arrivals.
-function [list closest_station] = radialStationFinder(StartTime, EndTime,radius,channel,longitude,latitude);
+function [list, closest_station] = radialStationFinder(StartTime, EndTime,radius,channel,longitude,latitude)
 
 
 
@@ -13,8 +13,15 @@ function [list closest_station] = radialStationFinder(StartTime, EndTime,radius,
 % EndTime = '2011-11-15 00:00:00';
 % searchRadius = 5;
 % sensorType = 'B??';
-
+list =[];
+while isempty(list) == 1;
+    try
 list = irisFetch.Stations('CHANNEL','*','*','*',channel,'IncludeRestricted',false,'StartBefore',StartTime,'EndAfter',EndTime,'Latitude',latitude,'Longitude',longitude,'MinimumRadius',0,'MaximumRadius',radius,'includeAvailability',true,'includePZ');
+    catch exception
+        fprintf('Trying again....\n');
+    end
+end
+
 delta = 1;
 while delta ~= 0
     delta = 0;

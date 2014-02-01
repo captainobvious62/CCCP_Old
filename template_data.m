@@ -3,6 +3,7 @@
 T01 = struct()
 T01.code = 'N54A';
 T01.network = 'TA';
+T01.pWaveArrival = '2011-03-17 10:53:20.075';
 T01.sWaveArrival = '2011-03-17 10:53:27.325';
 T01.template = 'T01';
 T01.channel_list = ['BHE';'BHN';'BHZ'];

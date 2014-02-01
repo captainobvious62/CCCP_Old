@@ -25,5 +25,5 @@ function ws = convertTraces(traces)
        w = addfield(w,'sacPZ',traces(i).sacpz);
        ws = addfield(w,'calib_applied','NO');
        ws(i) = w;
-   end
+   end 
 end

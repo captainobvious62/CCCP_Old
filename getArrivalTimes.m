@@ -35,23 +35,33 @@ event_match_matlab = sprintf('./%s/%s/TEL_%s_to_%s_events.mat',base_folder,resul
 load(event_match_matlab);
 fprintf('Event listing loaded\n');
 
-
-
+overall_listing = cell([2,length(template_list(:,1))]);
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1));
     single_template = template_list(template_count,:);
+    template = template_list(template_count,1).template;
+    template_listing = cell([2,length(single_template)]);
+    overall_listing{1,template_count} = template;
+    overall_listing{2,template_count} = template_listing;
     
     
     for station_count = 1:length(single_template);
+        
         station_specific_template = single_template(station_count);
         numberofchannels = length(station_specific_template.channel_list);
-        template = station_specific_template.template;
+        %template = station_specific_template.template;
         station = station_specific_template.station;
         network = station_specific_template.network;
         phase = station_specific_template.trigger;
+        station_listing = cell([2,numberofchannels]);
+        template_listing{1,station_count} = station;
+        template_listing{2,station_count} = station_listing;
         
         for chan_count = 1:numberofchannels
             channel = station_specific_template.channel_list{chan_count};
+            
+            station_listing{1,chan_count} = channel;
+            
             fprintf('Template: %s\n',template);
             fprintf('Station: %s\n',station);
             fprintf('Network: %s\n',network);
@@ -97,8 +107,8 @@ for template_count = 1:length(template_list(:,1));
                 timeAdjust = adjusttrig(timeAdjust,'index');
                 P_Arrivals_Z = datestr(get(timeAdjust,'trig'),'yyyy-mm-dd HH:MM:SS.FFF');
             end
-
             
+            station_listing{2,chan_count} = datestr(get(timeAdjust,'trig'),'yyyy-mm-dd HH:MM:SS.FFF');
             
             save(adjusted_correlation_object_savename,'timeAdjust');
         end
