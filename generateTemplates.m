@@ -33,7 +33,7 @@ template_move_out = cell(1,length(template_list(:,1)));
 
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1))
-    single_template = template_list(template_count,:);
+    single_template = template_list{template_count};
     
     
     for station_count = 1:length(single_template);
@@ -71,6 +71,7 @@ for template_count = 1:length(template_list(:,1))
                 fprintf('Template %s loaded.\n',template_savename)
             else
                 wf_Temp = waveform();
+                attempts = 0;
                 while isempty(wf_Temp) == 1
                     try
                         fprintf('Downloading template\n')
@@ -79,6 +80,10 @@ for template_count = 1:length(template_list(:,1))
                     catch exception
                         fprintf('Trying again....\n');
                     end      
+                    attempts = attempts +1;
+                    if attempts >5
+                        break
+                    end
                 end
                 if strcmp(channel(length(channel):length(channel)),'Z') == 1
                     wf_Temp = addfield(wf_Temp,'TRIGGER',datenum(station_specific_template.pWaveArrival));

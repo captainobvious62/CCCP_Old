@@ -54,7 +54,7 @@ for time = start_date:CC_increment:end_date
     fprintf('Operation Time/Date: %s\n',datestr(clock));
     
     for template_count = 1:length(template_list(:,1))
-        single_template = template_list(template_count,:);
+        single_template = template_list{template_count};
         
         
         for station_count = 1:length(single_template);

@@ -22,7 +22,7 @@ end_date = sprintf('%04d-%02d-%02d %02d:%02d.%d',end_year,end_month,end_day,end_
 
 %Check to ensure the proper flow of time
 start_date = datenum(start_date);
-end_date = datenum(end_date);
+end_date = datenum(end_date) + CC_increment;
 delta_time = end_date - start_date;
 is_real = delta_time > 0;
 if is_real == 0;
@@ -55,7 +55,7 @@ for time = start_date:CC_increment:end_date
     fprintf('%s\n',datestr(time));
     end_time = time + CC_increment;
     for template_count = 1:length(template_list(:,1))
-        single_template = template_list(template_count,:);
+        single_template = template_list{template_count};
         for station_count = 1:length(single_template);
             station_specific_template = single_template(station_count);
             numberofchannels = length(station_specific_template.channel_list);

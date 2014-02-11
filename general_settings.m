@@ -9,6 +9,7 @@ crosscorrelation_folder = 'CC';
 waveform_folder = 'WF';
 all_stack_folder = 'ALLStack';
 station_stack_folder = 'StationStack';
+template_stack_folder = 'TemplateStack';
 check_folder = 'check';
 correlation_object_folder = 'CorrelationObject';
 javaaddpath(sprintf('%s/IRIS-WS-2.0.4.jar',base_folder));
@@ -18,8 +19,8 @@ javaaddpath(sprintf('%s/IRIS-WS-2.0.4.jar',base_folder));
 month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %Starting Date/Time
-start_year = 2010;
-start_month = 03;
+start_year = 2011;
+start_month = 11;
 start_day = 01;
 start_minute = 00;
 start_second = 00;
@@ -33,7 +34,7 @@ start_second = 00;
 
 %Ending Date/Time
 end_year = 2011;
-end_month = 01;
+end_month = 12;
 end_day = 01;
 end_minute = 00;
 end_second = 00;
@@ -46,6 +47,9 @@ location = '*';
 %Snippet Settings
 %Snippet window settings (sec)
 
+
+%Which phase to use
+trigger = 'S';
 %For P Wave Arrrival
 time_before = 1;
 time_after = 20;

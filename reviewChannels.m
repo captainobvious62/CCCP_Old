@@ -30,7 +30,7 @@ end
 
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1))
-    single_template = template_list(template_count,:);
+    single_template = template_list{template_count};
     
     
     for station_count = 1:length(single_template);

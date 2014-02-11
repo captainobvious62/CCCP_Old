@@ -4,8 +4,8 @@
 %educated guess
 
 
-starttime = '2014-01-22 18:40:00';
-endtime = '2014-01-22 18:45:00';
+starttime = '2011-11-25 18:40:00';
+endtime = '2011-11-25 18:45:00';
 radius = 5;%Degrees
 channel = 'BHZ';
 longitude = -104.650;
