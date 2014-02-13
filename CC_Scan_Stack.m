@@ -5,7 +5,7 @@
 %all input parameters are modifiable in template_data_input.m
 %all general parameters are modifiable in general_settings.m
 
-template_data_input
+templates
 general_settings
 
 
@@ -62,7 +62,7 @@ total_detections = 0;
 
 
 for template_count = 1:length(template_list(:,1))
-    single_template = template_list(template_count,:);
+    single_template = template_list{template_count};
     template_events = {'Time Index', 'CC Value','Time (UTC)','MATLAB Time','Threshold Value','Station','Network','Template', 'Phase','MAD','CC Relation to MAD'};
     template_row = 2;
     template_detections = 0;

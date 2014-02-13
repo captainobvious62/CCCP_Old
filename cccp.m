@@ -25,7 +25,7 @@
 % Process general input parameters
 general_settings
 % Take orders from input scripts as to which templates to gather
-template_data_input
+templates
 % Generate templates
 generateTemplates
 % Generate cross correlations for selected timeframe, stations, and channels, 
@@ -34,7 +34,10 @@ CC_SingleChannel_Java
 CC_SingleStation_Stack
 % Scan individual station stacks for matches
 CC_Scan_Stack
+
+CC_MO_Stack
+CC_Scan_All_Stations_Stacked
 %Build Correlation Objects
-generateCorrelationObject
+%generateCorrelationObject
 %Find P and S wave Arrival Times
-getArrivalTimes
+%getArrivalTimes

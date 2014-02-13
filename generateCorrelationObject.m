@@ -12,7 +12,7 @@
 %Read in written/generated template data from file
 %all input parameters are modifiable in template_data_input.m
 %all general parameters are modifiable in general_settings.m
-template_data_input
+templates
 general_settings
 
 %Adjust time data to MATLAB readable format
@@ -44,7 +44,7 @@ fprintf('Event listing loaded\n');
 
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1));
-    single_template = template_list(template_count,:);
+    single_template = template_list{template_count};
     for station_count = 1:length(single_template);
         station_specific_template = single_template(station_count);
         numberofchannels = length(station_specific_template.channel_list);

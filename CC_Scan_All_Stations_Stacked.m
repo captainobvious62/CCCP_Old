@@ -61,7 +61,7 @@ row = 2;
 total_detections = 0;
 
 
-for time = start_date:CC_increment:(end_date-CC_increment)
+for time = start_date:CC_increment:(end_date)
     
     start_time = time;
     end_time = time + CC_increment;
@@ -70,64 +70,62 @@ for time = start_date:CC_increment:(end_date-CC_increment)
     end
     
     for template_count = 1:length(template_list(:,1))
-        single_template = template_list(template_count,:);
+        single_template = template_list{template_count};
         template = single_template(template_count).template;
-        ALL_CC_Stacked_savename = sprintf('%s/%s/ALL_CC_Stacked_%s_%s.mat',base_folder,all_stack_folder,template,datestr(start_time,30));
+        ALL_CC_Stacked_savename = sprintf('%s/%s/CC_Template_Stacked_%s_%s.mat',base_folder,template_stack_folder,template,datestr(start_time,30));
         
-        repeat = 1;
+%         repeat = 1;
         %Check each day for found events
-        while repeat == 1;
-            %Check to see if the stacked cross correlation file exists
-            if exist(ALL_CC_Stacked_savename,'file') == 0
-                while exist(ALL_CC_Stacked_savename,'file') == 0
-                    fprintf('%s %s\n',datestr(time),template);
-                    fprintf('Previous ALL Stacked Cross Correlation NOT found\n');
-                    fprintf('Running Stacking Program\n');
-                    CC_All_Stack
-                end
-            elseif exist(ALL_CC_Stacked_savename,'file') == 2
-                fprintf('%s %s\n',datestr(time),template);
-                fprintf('Previous ALL Stacked Cross Correlation found\n');
-                load(ALL_CC_Stacked_savename);
-                %Check to see that the stacked cross correlation file has
-                %data
-                if isempty(ALL_Stacked_CC) == 1
-                    while isempty(ALL_Stacked_CC) == 1
+        %         while repeat == 1;
+        %Check to see if the stacked cross correlation file exists
+        %             if exist(ALL_CC_Stacked_savename,'file') == 0
+        %                 while exist(ALL_CC_Stacked_savename,'file') == 0
+        %                     fprintf('%s %s\n',datestr(time),template);
+        %                     fprintf('Previous ALL Stacked Cross Correlation NOT found\n');
+        %                     fprintf('Running Stacking Program\n');
+        %                     CC_All_Stack
+        %                 end
+        %             elseif exist(ALL_CC_Stacked_savename,'file') == 2
                         fprintf('%s %s\n',datestr(time),template);
-                        fprintf('Previous ALL Stacked Cross Correlation is empty\n');
-                        fprintf('Running Stacking Program\n');
-                        CC_All_Stack
-                    end
-                end
-                
-                data = get(ALL_Stacked_CC,'data'); %Review CC for prospects
-                threshold = 9*mad(data);
-                freq = get(ALL_Stacked_CC,'freq');
-                [PeakCorr,PeakIndex] = getpeaks(data,'NPEAKS',candidates);
-                TimeIndex = PeakIndex/freq;
-                DisplayTime = time;
-                detections = 0;
-                for z = 1:candidates
-                    if PeakCorr(z) >= threshold
-                        DisplayTime = time + (TimeIndex(z)/(60*60*24));
-                        events{row,1} = TimeIndex(z);
-                        events{row,2} = PeakCorr(z);
-                        events{row,3} = datestr(DisplayTime,'dd mmmm yyyy HH:MM:SS.FFF');
-                        events{row,4} = DisplayTime;
-                        events{row,5} = threshold;
-                        events{row,6} = template;
-                        row = row + 1;
-                        detections = detections + 1;
-                        total_detections = total_detections + 1;
-                    end
-                end
-                fprintf('%d events detected\n',detections);
-                fprintf('%d total events detected\n',total_detections);
-                repeat = 0;
-                
-                
+                        fprintf('Previous ALL Stacked Cross Correlation found\n');
+                        load(ALL_CC_Stacked_savename);
+        %                 %Check to see that the stacked cross correlation file has
+        %                 %data
+        %                 if isempty(ALL_Stacked_CC) == 1
+        %                     while isempty(ALL_Stacked_CC) == 1
+        %                         fprintf('%s %s\n',datestr(time),template);
+        %                         fprintf('Previous ALL Stacked Cross Correlation is empty\n');
+        %                         fprintf('Running Stacking Program\n');
+        %                         CC_All_Stack
+        %                     end
+        %                 end
+        
+        data = get(Multi_Stack,'data'); %Review CC for prospects
+        threshold = 9*mad(data);
+        freq = get(Multi_Stack,'freq');
+        [PeakCorr,PeakIndex] = getpeaks(data,'NPEAKS',candidates);
+        TimeIndex = PeakIndex/freq;
+        DisplayTime = time;
+        detections = 0;
+        for z = 1:candidates
+            if PeakCorr(z) >= threshold
+                DisplayTime = time + (TimeIndex(z)/(60*60*24));
+                events{row,1} = TimeIndex(z);
+                events{row,2} = PeakCorr(z);
+                events{row,3} = datestr(DisplayTime,'dd mmmm yyyy HH:MM:SS.FFF');
+                events{row,4} = DisplayTime;
+                events{row,5} = threshold;
+                events{row,6} = template;
+                row = row + 1;
+                detections = detections + 1;
+                total_detections = total_detections + 1;
             end
         end
+        fprintf('%d events detected\n',detections);
+        fprintf('%d total events detected\n',total_detections);
+        repeat = 0;
+        
+        
     end
 end
 

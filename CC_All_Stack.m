@@ -9,7 +9,7 @@
 %Notes - Program has a weird wrap around problem that I dont understand.
 %Just ensure that scanned dates are one more day longer than actual.
 
-template_data_input
+templates
 general_settings
 generateTemplates
 

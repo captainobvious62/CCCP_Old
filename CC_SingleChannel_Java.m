@@ -22,7 +22,7 @@ end_date = sprintf('%04d-%02d-%02d %02d:%02d.%d',end_year,end_month,end_day,end_
 
 %Check to ensure the proper flow of time
 start_date = datenum(start_date);
-end_date = datenum(end_date) + CC_increment;
+end_date = datenum(end_date);
 delta_time = end_date - start_date;
 is_real = delta_time > 0;
 if is_real == 0;
@@ -121,22 +121,25 @@ for time = start_date:CC_increment:end_date
                     %Check to see if waveform has been downloaded before
                     if exist(WF_savename,'file') == 2
                         fprintf('Previously saved waveform found\n');
+                        
                         load(WF_savename);
-                        fprintf('Previously saved waveform loaded\n');
-                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                        WF_filtered = combine(WF_filtered);
-                        WF_filtered = fillgaps(WF_filtered,0);
-                        WF_filtered = filter_waveform_BP(WF_filtered,lower_band,upper_band);
-                        [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
 
-                        %match = mastercorr_extract(WF_filtered)
-                        CC = addfield(CC,'isCrossCorrelation', true);
-                        CC = fillgaps(CC,0);
-                        CC = set(CC,'location',location);
-                        CC = set(CC,'network',network);
-                        CC = set(CC,'channel',channel);
-                        save(CC_savename,'CC');
-                        fprintf('%s saved.\n',CC_savename);
+                            fprintf('Previously saved waveform loaded\n');
+                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                            WF_filtered = combine(WF_filtered);
+                            WF_filtered = fillgaps(WF_filtered,0);
+                            WF_filtered = filter_waveform_BP(WF_filtered,lower_band,upper_band);
+                            [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
+                            
+                            %match = mastercorr_extract(WF_filtered)
+                            CC = addfield(CC,'isCrossCorrelation', true);
+                            CC = fillgaps(CC,0);
+                            CC = set(CC,'location',location);
+                            CC = set(CC,'network',network);
+                            CC = set(CC,'channel',channel);
+                            save(CC_savename,'CC');
+                            fprintf('%s saved.\n',CC_savename);
+                        
                     else
                         WF_filtered = waveform();
                         tries = 0;
@@ -201,7 +204,7 @@ for time = start_date:CC_increment:end_date
                             %Placeholder zero waveform
                             %There has to be a better way to do this
                             WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                            save(WF_savename,'WF_filtered');
+                            save(WF_savename,'WF_trace');
                             fprintf('Placeholder(zeros) %s saved.\n',WF_savename);
                             CC = WF_filtered;
                             save(CC_savename,'CC');

@@ -5,7 +5,7 @@
 %all input parameters are modifiable in template_data_input.m
 %all general parameters are modifiable in general_settings.m
 
-template_data_input
+templates
 general_settings
 
 

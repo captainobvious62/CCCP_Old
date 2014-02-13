@@ -34,8 +34,8 @@ start_second = 00;
 
 %Ending Date/Time
 end_year = 2011;
-end_month = 12;
-end_day = 01;
+end_month = 11;
+end_day = 25;
 end_minute = 00;
 end_second = 00;
 
