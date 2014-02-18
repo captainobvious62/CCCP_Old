@@ -1,4 +1,4 @@
-function result = applyInstrumentResponse(ws)
+function ws = applyInstrumentResponse(ws)
 
 ws = combine(ws);
 ws = fillgaps(ws,0);
@@ -19,7 +19,6 @@ idelay = 0;
 rawdata = get(ws,'data');
 fprintf('Performing Instrument Response Correction\n');
 data = rm_instrum_resp(rawdata,null,samplerate,poles,zeros,flo,fhi,ordl,ordh,digout,sensitivityFrequency,oversampl,idelay);
-ws = set(w,'data',data);
-ws = addfield(w,'calib_applied','YES');
-result = ws;
+ws = set(ws,'data',data);
+ws = addfield(ws,'calib_applied','YES');
 end

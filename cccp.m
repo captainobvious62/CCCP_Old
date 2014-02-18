@@ -28,13 +28,16 @@ general_settings
 templates
 % Generate templates
 generateTemplates
-% Generate cross correlations for selected timeframe, stations, and channels, 
+%correlations for selected timeframe, stations, and channels, 
 CC_SingleChannel_Java
 % Stack individual components
 CC_SingleStation_Stack
 % Scan individual station stacks for matches
 CC_Scan_Stack
+%This program adjust for move out - move out is determined by calibrating each station by determining the highest point of
+%correlation for the template event, and comparing the time differential.
 CC_Move_Out_Adjust
+
 CC_MO_Stack
 CC_Scan_All_Stations_Stacked
 %Build Correlation Objects

@@ -25,12 +25,6 @@ if exist(directory_check,'dir') ~= 7;
     fprintf('Template directory created \n');
 end
 
-
-
-%Create Move Out matrix
-template_move_out = cell(1,length(template_list(:,1)));
-
-
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1))
     single_template = template_list{template_count};
@@ -44,11 +38,11 @@ for template_count = 1:length(template_list(:,1))
         %Choose which point to use for correlation, P or S break
         
         %For P Wave
-        if station_specific_template.trigger == 'P'
+        if strcmp(station_specific_template.trigger,'P') == 1
 
             starttime = P_Pick_time - (time_before/86400);
             endtime = P_Pick_time + (time_after/86400);
-        elseif station_specific_template.trigger == 'S'
+        elseif strcmp(station_specific_template.trigger,'S') == 1
         %For S Wave
 
             starttime = S_Pick_time - (time_before/86400);
@@ -74,7 +68,8 @@ for template_count = 1:length(template_list(:,1))
                     try
                         fprintf('Downloading template\n')
                         Temp = irisFetch.Traces(network,station,location, channel, starttime, endtime,'verbose','includePZ');
-                        wf_Temp = convertTracesRM_IR(Temp);
+                        %wf_Temp = convertTracesRM_IR(Temp);
+                        wf_Temp = convertTraces(Temp);
                     catch exception
                         fprintf('Trying again....\n');
                     end      
@@ -83,12 +78,11 @@ for template_count = 1:length(template_list(:,1))
                         break
                     end
                 end
-                if strcmp(channel(length(channel):length(channel)),'Z') == 1
+                if strcmp(station_specific_template.trigger,'P') == 1 
                     wf_Temp = addfield(wf_Temp,'TRIGGER',datenum(station_specific_template.pWaveArrival));
-                else
+                elseif strcmp(station_specific_template.trigger,'S') == 1
                     wf_Temp = addfield(wf_Temp,'TRIGGER',datenum(station_specific_template.sWaveArrival));
                 end
-                %wf_Temp = filter_waveform_BP(wf_Temp,lower_band,upper_band);
                 save(template_savename,'wf_Temp');
                 fprintf('Template %s saved.\n',template_savename)
             end
