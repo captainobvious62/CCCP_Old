@@ -8,7 +8,7 @@
 %all input parameters are modifiable in template_data_input.m
 %all general parameters are modifiable in general_settings.m
 
-template_data_input
+templates
 general_settings
 
 %Run script to gather station background data
@@ -49,7 +49,7 @@ failure = 0;
 
 %Loop over data for requested time and generate cross correlation functions
 
-for time = start_date:CC_increment:end_date
+for time = start_date:CC_increment:end_date+CC_increment
     
     start_time = time;
     fprintf('%s\n',datestr(time));
@@ -80,23 +80,24 @@ for time = start_date:CC_increment:end_date
                 if strcmp(network,'US') == 1
                     check_savename = sprintf('%s/%s/DATA_%s_%s.mat',base_folder,check_folder,station,channel);
                     load(check_savename);
+                    change_time = datenum('2011-05-02 00:00:00');
                     if strcmp(channel,'BHE') == 1
-                        if time > datenum(check.Channels(1,1).EndDate)
+                        if time > change_time
                             channel = 'BH1';
                         end;
                     end
                     if strcmp(channel,'BHN') == 1
-                        if time > datenum(check.Channels(1,1).EndDate)
+                        if time > change_time;
                             channel = 'BH2';
                         end
                     end
                     if strcmp(channel,'BH1') == 1
-                        if time < datenum(check.Channels(1,1).EndDate)
+                        if time < change_time;
                             channel = 'BHE';
                         end
                     end
                     if strcmp(channel,'BH2') == 1
-                        if time < datenum(check.Channels(1,1).EndDate)
+                        if time <change_time;
                             channel = 'BHN';
                         end
                     end
@@ -149,7 +150,7 @@ for time = start_date:CC_increment:end_date
                         
                         WF_trace = [];
                         
-                        if check_uptime(station,network,channel,location,time) == 1;
+                        %if check_uptime(station,network,channel,location,time) == 1;
                             while isempty(WF_trace) == 1
                                 if tries > 0
                                     fprintf('Trying again....\n');
@@ -164,26 +165,24 @@ for time = start_date:CC_increment:end_date
                                 if isempty(WF_trace) == 1
                                     tries = tries + 1;
                                 end
-                                if tries > 3;
+                                if tries > 4;
                                     fprintf('Guess it is not there....\n');
                                     WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
                                     fprintf('No data for requested interval\n');
                                     failure = 1;
                                 end
                             end
-                        elseif check_uptime(station,network,channel,location,time) == 0;
-                            fprintf('No data for requested interval\n');
-                            failure = 1;
-                            WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
-                            
-                        end
+%                         elseif check_uptime(station,network,channel,location,time) == 0;
+%                             fprintf('No data for requested interval\n');
+%                             failure = 1;
+%                             WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
+%                             
+%                         end
                         
                         if failure == 0;
+
                             WF_trace = convertTracesRM_IR(WF_trace);
-                            WF_trace = combine(WF_trace);
-                            WF_trace = fillgaps(WF_trace,0);
-                            WF_trace = set(WF_trace,'IR_CORRECTED','NO');
-                            
+
                             %Test of new filter function to enable use
                             %of varied sensitivities
                             WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);

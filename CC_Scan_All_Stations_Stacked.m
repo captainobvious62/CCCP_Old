@@ -7,7 +7,7 @@
 
 
 %Load data about templates
-template_data_input
+templates
 %Load control Settings
 general_settings
 
@@ -61,7 +61,7 @@ row = 2;
 total_detections = 0;
 
 
-for time = start_date:CC_increment:(end_date)
+for time = start_date:CC_increment:end_date
     
     start_time = time;
     end_time = time + CC_increment;

@@ -45,14 +45,12 @@ for template_count = 1:length(template_list(:,1))
         
         %For P Wave
         if station_specific_template.trigger == 'P'
-            time_before = station_specific_template.sideWindows(1);
-            time_after = station_specific_template.sideWindows(2);
+
             starttime = P_Pick_time - (time_before/86400);
             endtime = P_Pick_time + (time_after/86400);
         elseif station_specific_template.trigger == 'S'
         %For S Wave
-            time_before = station_specific_template.sideWindows(1);
-            time_after = station_specific_template.sideWindows(2);
+
             starttime = S_Pick_time - (time_before/86400);
             endtime = S_Pick_time + (time_after/86400);
         end

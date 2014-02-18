@@ -21,7 +21,7 @@ month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 %Starting Date/Time
 start_year = 2011;
 start_month = 11;
-start_day = 01;
+start_day = 25;
 start_minute = 00;
 start_second = 00;
 
@@ -35,7 +35,7 @@ start_second = 00;
 %Ending Date/Time
 end_year = 2011;
 end_month = 11;
-end_day = 25;
+end_day = 26;
 end_minute = 00;
 end_second = 00;
 
@@ -50,14 +50,14 @@ location = '*';
 
 %Which phase to use
 trigger = 'S';
-%For P Wave Arrrival
-time_before = 1;
-time_after = 20;
+% %For P Wave Arrrival
+% time_before = 10;
+% time_after = 10;
 
 
 %Typical for S Wave
-% time_before = 10;
-% time_after = 10;
+time_before = 10;
+time_after = 10;
 
 %Filter Settings
 lower_band = 1;

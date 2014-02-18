@@ -1,29 +1,29 @@
 function ws = convertTraces(traces)
    for i = 1:length(traces)
-       w = waveform;
+       ws(i) = waveform;
       %Use initial location for all forms
        myscnl = scnlobject(char(traces(i).station), ...
            char(traces(i).channel), ...
            char(traces(i).network), ...
            char(traces(1).location));
-       w = set(w,'scnlobject',myscnl,'freq',traces(i).sampleRate); %, 'start', datenum(startDateStr, 'yyyy-mm-dd HH:MM:SS.FFF'));
-       w = set(w,'start', datestr(traces(i).startTime));
-       w = addfield(w,'end',traces(i).endTime);
-       w = addfield(w,'latitude',traces(i).latitude);
-       w = addfield(w,'longitude', traces(i).longitude);
-       w = addfield(w,'elevation',traces(i).elevation);
-       w = addfield(w,'depth',traces(i).depth);
-       w = addfield(w,'azimuth',traces(i).azimuth);
-       w = addfield(w,'dip',traces(i).dip);
-       w = addfield(w,'sensitivity',traces(i).sensitivity);
-       w = addfield(w,'sensitivityFrequency',traces(i).sensitivityFrequency);
-       w = addfield(w,'instrument',char(traces(i).instrument));
-       w = set(w,'units',char(traces(i).sensitivityUnits));
-       w = addfield(w,'calib',1 ./ traces(i).sensitivity);
-       w = addfield(w,'calib_applied','NO');
-       w = set(w,'data', traces(i).data);
-       w = addfield(w,'sacPZ',traces(i).sacpz);
-       ws = addfield(w,'calib_applied','NO');
-       ws(i) = w;
-   end 
+       ws(i) = set(ws(i),'scnlobject',myscnl,'freq',traces(i).sampleRate); %, 'start', datenum(startDateStr, 'yyyy-mm-dd HH:MM:SS.FFF'));
+       ws(i) = set(ws(i),'start', datestr(traces(i).startTime));
+       ws(i) = addfield(ws(i),'end',traces(i).endTime);
+       ws(i) = addfield(ws(i),'latitude',traces(i).latitude);
+       ws(i) = addfield(ws(i),'longitude', traces(i).longitude);
+       ws(i) = addfield(ws(i),'elevation',traces(i).elevation);
+       ws(i) = addfield(ws(i),'depth',traces(i).depth);
+       ws(i) = addfield(ws(i),'azimuth',traces(i).azimuth);
+       ws(i) = addfield(ws(i),'dip',traces(i).dip);
+       ws(i) = addfield(ws(i),'sensitivity',traces(i).sensitivity);
+       ws(i) = addfield(ws(i),'sensitivityFrequency',traces(i).sensitivityFrequency);
+       ws(i) = addfield(ws(i),'instrument',char(traces(i).instrument));
+       ws(i) = set(ws(i),'units',char(traces(i).sensitivityUnits));
+       ws(i) = addfield(ws(i),'calib',1 ./ traces(i).sensitivity);
+       ws(i) = addfield(ws(i),'calib_applied','NO');
+       ws(i) = set(ws(i),'data', traces(i).data);
+       ws(i) = addfield(ws(i),'sacPZ',traces(i).sacpz);
+       ws(i) = addfield(ws(i),'calib_applied','NO');
+       
+    end 
 end

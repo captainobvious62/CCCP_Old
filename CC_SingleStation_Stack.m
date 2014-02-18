@@ -45,7 +45,7 @@ failure = 0;
 
 %Loop over data for requested time and stack cross correlation functions
 
-for time = start_date:CC_increment:end_date
+for time = start_date:CC_increment:end_date+CC_increment
     
     start_time = time;
     end_time = time + CC_increment;
@@ -65,15 +65,14 @@ for time = start_date:CC_increment:end_date
             network = station_specific_template.network;
             CC_Stacked_savename = sprintf('%s/%s/CC_Stacked_%s_%s_%s.mat',base_folder,station_stack_folder,template,station,datestr(start_time,30));
             %Check to see if previous Stacked CC has been generated
-            CC_EXIST = 0;
+            
             if exist(CC_Stacked_savename,'file') == 2
                 load(CC_Stacked_savename);
                 if isempty(Stacked_CC) == 0;
                     fprintf('Stacked Cross Correlation %s found\n',CC_Stacked_savename);
                     CC_EXIST = 1;
                 end
-            end
-            if CC_EXIST == 0;
+            else
                 Stacked_CC = [];
                 for chan_count = 1:numberofchannels
                     channel = station_specific_template.channel_list{chan_count};
@@ -115,7 +114,7 @@ for time = start_date:CC_increment:end_date
                             %End idiot IRIS compensation (US Stations change from BHE/BHN/BHZ to BH1/BH2/BHZ in the middle of 2011)
                             load(CC_savename);
                             fprintf('Cross Correlation %s loaded\n',CC_savename);
-                    
+                            
                             Stacked_CC = fillgaps(CC,0);
                             
                             if length(Stacked_CC) > 1

@@ -1,6 +1,0 @@
-function output = filter_waveform(WF)
-%filters based upon a bandpass from 1 Hz to 80% of NYQ
-
-
-
-uptime = exists;
