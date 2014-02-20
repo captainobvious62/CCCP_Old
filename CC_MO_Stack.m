@@ -49,7 +49,7 @@ failure = 0;
 
 
 %Replace this with a function
-CC_Move_Out_Adjust
+%CC_Move_Out_Adjust
 
 %Loop over data for requested time and stack cross correlation functions
 
