@@ -118,11 +118,9 @@ for time = start_date:CC_increment:end_date+CC_increment
                         fprintf('Previously saved waveform found\n');
                         load(WF_savename);
                         fprintf('Previously saved waveform loaded\n');
-                        if exist(WF_filtered) == 0
-                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                            WF_filtered = combine(WF_filtered);
-                            WF_filtered = fillgaps(WF_filtered,0);
-                        end
+                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                        WF_filtered = combine(WF_filtered);
+                        WF_filtered = fillgaps(WF_filtered,0);
                         WF_filtered = filter_waveform_BP(WF_filtered,lower_band,upper_band);
                         [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
                         
