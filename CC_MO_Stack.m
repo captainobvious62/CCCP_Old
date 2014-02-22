@@ -38,6 +38,12 @@ failure = 0;
 
 
 
+
+    
+    for template_count = 1:length(template_list)
+        single_template = template_list{template_count};
+        single_template = moveoutadjust_calc(base_folder,station_stack_folder,single_template,trigger);
+
 for time = start_date:CC_increment:end_date
     
     start_time = time;
@@ -46,12 +52,17 @@ for time = start_date:CC_increment:end_date
     fprintf('End Time: %s\n',datestr(end_time));
     fprintf('Operation Time/Date: %s\n',datestr(clock));
     
-    
-    for template_count = 1:length(template_list)
-        single_template = template_list{template_count};
-        single_template = moveoutadjust_calc(base_folder,station_stack_folder,single_template,trigger);
+
+
+
+
+
+
+
         Multi_Stack = [];
         
+
+
         for station_count = 1:length(single_template);
             station_specific_template = single_template(station_count);
             numberofchannels = length(station_specific_template.channel_list);

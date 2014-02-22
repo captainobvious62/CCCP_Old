@@ -34,6 +34,34 @@
 % T01(2).channel_list = ['BHE';'BHN';'BHZ'];
 % T01(2).channel_list = cellstr(T01(2).channel_list);
 % 
+
+
+
+
+
+
+
+T01(1).station = 'MCWV';
+T01(1).network = 'US';
+T01(1).sWaveArrival = '2011-03-17 10:54:01.550';
+T01(1).trigger = 'S';
+T01(1).template = '25_Nov';
+T01(1).channel_list = ['BHE';'BHN';'BHZ'];
+T01(1).channel_list = cellstr(T01(1).channel_list);
+T01(1).moveOut = 34.225;
+
+
+
+
+T01(2).station = 'ACSO';
+T01(2).network = 'US';
+T01(2).sWaveArrival = '2011-03-17 10:54:09.100';
+T01(2).trigger = 'S';
+T01(2).template = '25_Nov';
+T01(2).channel_list = ['BHE';'BHN';'BHZ'];
+T01(2).channel_list = cellstr(T01(2).channel_list);
+T01(2).moveOut = 41.775;
+
 % %Totally false. Only need
 % T01(3).station = 'ERPA';
 % T01(3).network = 'US';
