@@ -177,46 +177,46 @@ for time = start_date:CC_increment:end_date+CC_increment
                         WF_trace = convertTraces(WF_trace);
                         %Test of new filter function to enable use
                         %of varied sensitivities
-                        if exist(WF_filtered,'var') == 0
-                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                            %Unfiltered waveform is saved
-                            save(WF_savename,'WF_trace');
-                            fprintf('%s saved.\n',WF_savename);
-                            [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,Master_CC_Scan_Threshold);
-                            %match = mastercorr_extract(WF_filtered)
-                            CC = addfield(CC,'isCrossCorrelation', true);
-                            CC = fillgaps(CC,0);
-                            CC = set(CC,'location',location);
-                            CC = set(CC,'network',network);
-                            CC = set(CC,'channel',channel);
-                            save(CC_savename,'CC');
-                            fprintf('%s saved.\n',CC_savename);
-                        elseif failure == 1;
-                            %Placeholder zero waveform
-                            %There has to be a better way to do this
-                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                            save(WF_savename,'WF_trace');
-                            fprintf('Placeholder(zeros) %s saved.\n',WF_savename);
-                            CC = WF_filtered;
-                            save(CC_savename,'CC');
-                            fprintf('Placeholder(zeros) %s saved.\n',CC_savename);
-                            [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
-                            %match = mastercorr_extract(WF_filtered)
-                            CC = addfield(CC,'isCrossCorrelation', true);
-                            CC = fillgaps(CC,0);
-                            CC = set(CC,'location',location);
-                            CC = set(CC,'network',network);
-                            CC = set(CC,'channel',channel);
-                            save(CC_savename,'CC');
-                            fprintf('Placeholder values saved\n');
-                            fprintf('%s saved.\n',CC_savename);
-                        end
+                        
+                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                        %Unfiltered waveform is saved
+                        save(WF_savename,'WF_trace');
+                        fprintf('%s saved.\n',WF_savename);
+                        [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,Master_CC_Scan_Threshold);
+                        %match = mastercorr_extract(WF_filtered)
+                        CC = addfield(CC,'isCrossCorrelation', true);
+                        CC = fillgaps(CC,0);
+                        CC = set(CC,'location',location);
+                        CC = set(CC,'network',network);
+                        CC = set(CC,'channel',channel);
+                        save(CC_savename,'CC');
+                        fprintf('%s saved.\n',CC_savename);
+                    elseif failure == 1;
+                        %Placeholder zero waveform
+                        %There has to be a better way to do this
+                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                        save(WF_savename,'WF_trace');
+                        fprintf('Placeholder(zeros) %s saved.\n',WF_savename);
+                        CC = WF_filtered;
+                        save(CC_savename,'CC');
+                        fprintf('Placeholder(zeros) %s saved.\n',CC_savename);
+                        [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
+                        %match = mastercorr_extract(WF_filtered)
+                        CC = addfield(CC,'isCrossCorrelation', true);
+                        CC = fillgaps(CC,0);
+                        CC = set(CC,'location',location);
+                        CC = set(CC,'network',network);
+                        CC = set(CC,'channel',channel);
+                        save(CC_savename,'CC');
+                        fprintf('Placeholder values saved\n');
+                        fprintf('%s saved.\n',CC_savename);
                     end
                 end
             end
         end
     end
 end
+
 
 
 
