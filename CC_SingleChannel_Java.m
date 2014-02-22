@@ -132,89 +132,88 @@ for time = start_date:CC_increment:end_date+CC_increment
                         CC = set(CC,'channel',channel);
                         save(CC_savename,'CC');
                         fprintf('%s saved.\n',CC_savename);
-                    end
-                else
-                    tries = 0;
-                    failure = 0;
-                    %Check to see if data exists for the desired
-                    %time interval
-                    
-                    WF_trace = [];
-                    
-                    %if check_uptime(station,network,channel,location,time) == 1;
-                    while isempty(WF_trace) == 1
-                        if tries > 0
-                            fprintf('Trying again....\n');
-                        end
-                        try
-                            WF_trace = irisFetch.Traces(network, station, location, channel, start_time, end_time,'verbose','includePZ');
-                            
-                        catch exception
-                            
-                            tries = tries +1;
-                        end
-                        if isempty(WF_trace) == 1
-                            tries = tries + 1;
-                        end
-                        if tries > 4;
-                            fprintf('Guess it is not there....\n');
-                            WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
-                            fprintf('No data for requested interval\n');
-                            failure = 1;
-                        end
-                    end
-                    %                         elseif check_uptime(station,network,channel,location,time) == 0;
-                    %                             fprintf('No data for requested interval\n');
-                    %                             failure = 1;
-                    %                             WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
-                    %
-                    %                         end
-                    
-                    if failure == 0;
-                        %WF_trace = convertTracesRM_IR(WF_trace);
-                        WF_trace = convertTraces(WF_trace);
-                        %Test of new filter function to enable use
-                        %of varied sensitivities
+                    else
+                        tries = 0;
+                        failure = 0;
+                        %Check to see if data exists for the desired
+                        %time interval
                         
-                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                        %Unfiltered waveform is saved
-                        save(WF_savename,'WF_trace');
-                        fprintf('%s saved.\n',WF_savename);
-                        [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,Master_CC_Scan_Threshold);
-                        %match = mastercorr_extract(WF_filtered)
-                        CC = addfield(CC,'isCrossCorrelation', true);
-                        CC = fillgaps(CC,0);
-                        CC = set(CC,'location',location);
-                        CC = set(CC,'network',network);
-                        CC = set(CC,'channel',channel);
-                        save(CC_savename,'CC');
-                        fprintf('%s saved.\n',CC_savename);
-                    elseif failure == 1;
-                        %Placeholder zero waveform
-                        %There has to be a better way to do this
-                        WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
-                        save(WF_savename,'WF_trace');
-                        fprintf('Placeholder(zeros) %s saved.\n',WF_savename);
-                        CC = WF_filtered;
-                        save(CC_savename,'CC');
-                        fprintf('Placeholder(zeros) %s saved.\n',CC_savename);
-                        [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
-                        %match = mastercorr_extract(WF_filtered)
-                        CC = addfield(CC,'isCrossCorrelation', true);
-                        CC = fillgaps(CC,0);
-                        CC = set(CC,'location',location);
-                        CC = set(CC,'network',network);
-                        CC = set(CC,'channel',channel);
-                        save(CC_savename,'CC');
-                        fprintf('Placeholder values saved\n');
-                        fprintf('%s saved.\n',CC_savename);
+                        WF_trace = [];
+                        
+                        %if check_uptime(station,network,channel,location,time) == 1;
+                        while isempty(WF_trace) == 1
+                            if tries > 0
+                                fprintf('Trying again....\n');
+                            end
+                            try
+                                WF_trace = irisFetch.Traces(network, station, location, channel, start_time, end_time,'verbose','includePZ');
+                                
+                            catch exception
+                                
+                                tries = tries +1;
+                            end
+                            if isempty(WF_trace) == 1
+                                tries = tries + 1;
+                            end
+                            if tries > 4;
+                                fprintf('Guess it is not there....\n');
+                                WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
+                                fprintf('No data for requested interval\n');
+                                failure = 1;
+                            end
+                        end
+                        %                         elseif check_uptime(station,network,channel,location,time) == 0;
+                        %                             fprintf('No data for requested interval\n');
+                        %                             failure = 1;
+                        %                             WF_trace = waveform(station,channel,check.Channels(1).SampleRate, start_time, zeros((86400*check.Channels(1).SampleRate),1));
+                        %
+                        %                         end
+                        
+                        if failure == 0;
+                            %WF_trace = convertTracesRM_IR(WF_trace);
+                            WF_trace = convertTraces(WF_trace);
+                            %Test of new filter function to enable use
+                            %of varied sensitivities
+                            
+                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                            %Unfiltered waveform is saved
+                            save(WF_savename,'WF_trace');
+                            fprintf('%s saved.\n',WF_savename);
+                            [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,Master_CC_Scan_Threshold);
+                            %match = mastercorr_extract(WF_filtered)
+                            CC = addfield(CC,'isCrossCorrelation', true);
+                            CC = fillgaps(CC,0);
+                            CC = set(CC,'location',location);
+                            CC = set(CC,'network',network);
+                            CC = set(CC,'channel',channel);
+                            save(CC_savename,'CC');
+                            fprintf('%s saved.\n',CC_savename);
+                        elseif failure == 1;
+                            %Placeholder zero waveform
+                            %There has to be a better way to do this
+                            WF_filtered = filter_waveform_BP(WF_trace,lower_band,upper_band);
+                            save(WF_savename,'WF_trace');
+                            fprintf('Placeholder(zeros) %s saved.\n',WF_savename);
+                            CC = WF_filtered;
+                            save(CC_savename,'CC');
+                            fprintf('Placeholder(zeros) %s saved.\n',CC_savename);
+                            [WF_filtered,CC] = mastercorr_scan(WF_filtered,wf_Temp,0.3);
+                            %match = mastercorr_extract(WF_filtered)
+                            CC = addfield(CC,'isCrossCorrelation', true);
+                            CC = fillgaps(CC,0);
+                            CC = set(CC,'location',location);
+                            CC = set(CC,'network',network);
+                            CC = set(CC,'channel',channel);
+                            save(CC_savename,'CC');
+                            fprintf('Placeholder values saved\n');
+                            fprintf('%s saved.\n',CC_savename);
+                        end
                     end
                 end
             end
         end
     end
 end
-
-
-
-
+    
+    
+    
