@@ -26,4 +26,7 @@ function ws = convertTraces(traces)
        ws(i) = addfield(ws(i),'calib_applied','NO');
        
     end 
+
+ws = combine(ws);
+ws = fillgaps(ws,0);
 end

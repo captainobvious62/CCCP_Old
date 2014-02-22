@@ -34,7 +34,7 @@ CC_SingleChannel_Java
 CC_SingleStation_Stack
 % Scan individual station stacks for matches
 CC_Scan_Stack
-%This program adjust for move out - move out is determined by calibrating each station by determining the highest point of
+%This program adjusts for move out - move out is determined by calibrating each station by determining the highest point of
 %correlation for the template event, and comparing the time differential.
 CC_Move_Out_Adjust
 

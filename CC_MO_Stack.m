@@ -8,14 +8,15 @@
 templates
 general_settings
 
-
-
-
+directory_check = sprintf('./%s/%s',base_folder,template_stack_folder);
+if exist(directory_check,'dir') ~= 7;
+    mkdir(directory_check);
+    fprintf('Template Stacked Cross Correlation directory created \n');
+end
 
 %Adjust time data to MATLAB readable format
 start_date = sprintf('%04d-%02d-%02d %02d:%02d.%d',start_year,start_month,start_day,start_minute,start_second);
 end_date = sprintf('%04d-%02d-%02d %02d:%02d.%d',end_year,end_month,end_day,end_minute,end_second);
-
 %Check to ensure the proper flow of time
 start_date = datenum(start_date);
 end_date = datenum(end_date);
@@ -23,25 +24,6 @@ delta_time = end_date - start_date;
 is_real = delta_time > 0;
 if is_real == 0;
     fprintf('The Campaign for Real Time requests that you please ensure that your ending date follows your starting date. \n');
-end
-
-%Check for directory structure
-
-directory_check = sprintf('./%s/%s',base_folder,template_stack_folder);
-if exist(directory_check,'dir') ~= 7;
-    mkdir(directory_check);
-    fprintf('Template Stacked Cross Correlation directory created \n');
-end
-
-directory_check = sprintf('./%s/%s',base_folder,station_stack_folder);
-if exist(directory_check,'dir') ~= 7;
-    mkdir(directory_check);
-    fprintf('Station Stacked Cross Correlation directory created \n');
-end
-directory_check = sprintf('./%s/%s',base_folder,waveform_folder);
-if exist(directory_check,'dir') ~= 7;
-    mkdir(directory_check);
-    fprintf('Waveform directory created \n');
 end
 
 %Failure Control
@@ -67,7 +49,7 @@ for time = start_date:CC_increment:end_date
     
     for template_count = 1:length(template_list)
         single_template = template_list{template_count};
-        single_template = moveoutadjust_calc(single_template,trigger);
+        single_template = moveoutadjust_calc(base_folder,station_stack_folder,single_template,trigger);
         Multi_Stack = [];
         
         for station_count = 1:length(single_template);
@@ -77,31 +59,14 @@ for time = start_date:CC_increment:end_date
             station = station_specific_template.station;
             network = station_specific_template.network;
             template_stack_savename = sprintf('%s/%s/CC_Template_Stacked_%s_%s.mat',base_folder,template_stack_folder,template,datestr(start_time,30));
-           
             offset = station_specific_template.MoveOut;
-            
-            
-            
             CC_Stacked_savename = sprintf('%s/%s/CC_Stacked_%s_%s_%s.mat',base_folder,station_stack_folder,template,station,datestr(start_time,30));
-            CC_Stacked_nextday_savename = sprintf('%s/%s/CC_Stacked_%s_%s_%s.mat',base_folder,station_stack_folder,template,station,datestr(start_time+CC_increment,30));
-            CC_EXIST = 0;
-            %             if exist(CC_Stacked_savename,'file') == 2
             load(CC_Stacked_savename);
             fprintf('%s loaded\n',CC_Stacked_savename);
             Stacked_CC = fillgaps(Stacked_CC,0);
             Stacked_CC = set(Stacked_CC,'start',start_time - offset/86400);
-            
-            %extract(Stacked_CC,'TIME',offset/86400 + start_time,end_time);
-            %             if offset ~= 0;
-            %
-            %                 load(CC_Stacked_nextday_savename);
-            %                 Stacked_CC_next_day = extract(Stacked_CC,'TIME',end_time - offset/86400, end_time);
-            %                 Stacked_CC = [Stacked_CC_current_day,Stacked_CC_next_day];
-            %                 Stacked_CC = combine(Stacked_CC);
-            %             end
             Stacked_CC = set(Stacked_CC,'station','Multi-Stack');
             Stacked_CC = set(Stacked_CC,'network','--');
-            
             Multi_Stack = [Multi_Stack Stacked_CC];
         end
         Control = Multi_Stack;

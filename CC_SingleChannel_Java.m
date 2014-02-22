@@ -39,13 +39,9 @@ end
 
 %Failure Control
 failure = 0;
-
-
-
-
 %Loop over data for requested time and generate cross correlation functions
 
-for time = start_date:CC_increment:end_date+CC_increment
+for time = start_date:CC_increment:end_date
     start_time = time;
     fprintf('%s\n',datestr(time));
     end_time = time + CC_increment;
@@ -170,8 +166,8 @@ for time = start_date:CC_increment:end_date+CC_increment
                         %                         end
                         
                         if failure == 0;
-                            %WF_trace = convertTracesRM_IR(WF_trace);
                             WF_trace = convertTraces(WF_trace);
+                            WF_trace = removeIR(WF_trace);
                             %Test of new filter function to enable use
                             %of varied sensitivities
                             

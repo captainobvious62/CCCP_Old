@@ -34,6 +34,8 @@ end_date = sprintf('%04d-%02d-%02d %02d:%02d.%d',end_year,end_month,end_day,end_
             [PeakCorr,PeakIndex] = getpeaks(data,'NPEAKS',1);
             template(station_count).MoveOut = PeakIndex/freq;
             template(station_count).PeakCorr = PeakCorr;
+            fprintf('%s\n',template(station_count).station);
+            fprintf('%d\n',PeakIndex/freq);
         end
         [corr, index] = sort([template(:).PeakCorr],'descend');
         template = template(index);

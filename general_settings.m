@@ -21,13 +21,13 @@ month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 %Starting Date/Time
 start_year = 2011;
 start_month = 11;
-start_day = 20;
+start_day = 25;
 start_minute = 00;
 start_second = 00;
 
 % start_year = 2011;
 % start_month = 11;
-% start_day = 20;
+% start_day = 26;
 % start_minute = 00;
 % start_second = 00;
 
