@@ -69,7 +69,7 @@ for template_count = 1:length(template_list(:,1))
                         fprintf('Downloading template\n')
                         Temp = irisFetch.Traces(network,station,location, channel, starttime, endtime,'verbose','includePZ');
                         wf_Temp = convertTraces(Temp);
-                        wf_Temp = removeIR(Temp);
+                       %wf_Temp = removeIR(Temp);
                     catch exception
                         fprintf('Trying again....\n');
                     end      
