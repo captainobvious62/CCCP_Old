@@ -6,67 +6,55 @@
 %Template name
 %Channel list denoting channels of interest
 %Move out time (will be automated, if it hasn't already been)
-
-% 
-% % %25 November 2011 event - previous baseline template. don't recall P wave arrival offhand.
 T01 = struct();
 T01.station = 'N54A';
 T01.network = 'TA';
-% %Change
 T01.pWaveArrival = '2011-03-17 10:53:19.900';
 T01.sWaveArrival = '2011-03-17 10:53:27.325';
 T01.template = '17_Mar';
 T01.trigger = 'S';
-T01.sideWindows = [10 10];
 T01.channel_list = ['BHE';'BHN';'BHZ'];
 T01.channel_list = cellstr(T01.channel_list);
-% 
-% 
-T01(2).station = 'MCWV';
-T01(2).network = 'US';
 
-T01(1).pWaveArrival = '2011-03-17 20:05:28.81';
-% 
-T01(2).sWaveArrival = '2011-03-17 10:54:01.550';
-T01(2).trigger = 'S';
-T01(2).sideWindows = [10 10];
- T01(2).template = '17_Mar';
- T01(2).channel_list = ['BHE';'BHN';'BHZ'];
- T01(2).channel_list = cellstr(T01(2).channel_list);
-% 
+T01(2).station = 'M54A';
+T01(2).network = 'TA';
+T01(2).pWaveArrival = '2011-03-17 10:53:25.100';
+T01(2).sWaveArrival = '2011-03-17 10:53:36.650';
+T01(2).template = '17_Mar';
+T01(2).channel_list = ['BHE';'BHN';'BHZ'];
+T01(2).channel_list = cellstr(T01(2).channel_list);
 
-
-
-
-T01(3).station = 'ACSO';
-T01(3).pWaveArrival = '2011-03-17 10:53:40';
+T01(3).station = 'MCWV';
 T01(3).network = 'US';
-
-T01(3).sWaveArrival = '2011-03-17 10:54:09.100';
+T01(3).pWaveArrival = '2011-03-17 10:53:38.200';
+T01(3).sWaveArrival = '2011-03-17 10:54:01.550';
 T01(3).trigger = 'S';
 T01(3).template = '17_Mar';
 T01(3).channel_list = ['BHE';'BHN';'BHZ'];
-T01(3).channel_list = cellstr(T01(2).channel_list);
-T01(3).moveOut = 41.775;
+T01(3).channel_list = cellstr(T01(3).channel_list);
 
-% %Totally false. Only need
-% T01(3).station = 'ERPA';
-% T01(3).network = 'US';
-% T01(3).pWaveArrival = '2011-03-17 06:47:55.730';
-% T01(3).sWaveArrival = '2011-03-17 06:48:17.750';
-% T01(3).trigger = 'S';
-% T01(3).sideWindows = [15 5];
-% T01(3).template = '17_Mar';
-% T01(3).channel_list = ['BH1';'BH2';'BHZ'];
-% T01(3).channel_list = cellstr(T01(3).channel_list);
-% 
-% T01(4).station = 'MCWV';
-% T01(5).station = 'ERPA';
+T01(4).station = 'ACSO';
+T01(4).network = 'US';
+T01(4).pWaveArrival = '2011-03-17 10:53:43.100';
+T01(4).sWaveArrival = '2011-03-17 10:54:09.100';
+T01(4).template = '17_Mar';
+T01(4).channel_list = ['BHE';'BHN';'BHZ'];
+T01(4).channel_list = cellstr(T01(4).channel_list);
 
+T01(5).station = 'ERPA';
+T01(5).network = 'US';
+T01(5).pWaveArrival = '2011-03-17 10:53:30.60';
+T01(5).sWaveArrival = '2011-03-17 10:53.43.80';
+T01(5).template = '17_Mar';
+T01(5).channel_list = ['BHE';'BHN';'BHZ'];
+T01(5).channel_list = cellstr(T01(5).channel_list);
 
-%%
-%25 November 2011
-
+T01(6).station = 'O56A';
+T01(6).network = 'TA';
+T01(6).pWaveArrival = '2011-03-17 10:53:42.40';
+T01(6).sWaveArrival = '2011-03-17 10:52:06.35'
+T01(6).channel_list = ['BHE';'BHN';'BHZ'];
+T01(6).channel_list = cellstr(T01(6).channel_list);
 
 T02 = struct();
 T02.station = 'N54A';
@@ -126,6 +114,6 @@ T02(6).channel_list = cellstr(T02(6).channel_list);
 
 
 
-template_list = {T02};
+template_list = {T01,T02};
 
 
