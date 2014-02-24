@@ -41,6 +41,6 @@ CC_Move_Out_Adjust
 CC_MO_Stack
 CC_Scan_All_Stations_Stacked
 %Build Correlation Objects
-%generateCorrelationObject
+generateCorrelationObject
 %Find P and S wave Arrival Times
-%getArrivalTimes
+getArrivalTimes
