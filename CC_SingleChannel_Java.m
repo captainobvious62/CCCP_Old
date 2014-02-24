@@ -167,7 +167,7 @@ for time = start_date:CC_increment:end_date
                         
                         if failure == 0;
                             WF_trace = convertTraces(WF_trace);
-                            WF_trace = removeIR(WF_trace);
+                            %WF_trace = removeIR(WF_trace);
                             %Test of new filter function to enable use
                             %of varied sensitivities
                             

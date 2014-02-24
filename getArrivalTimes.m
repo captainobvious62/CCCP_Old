@@ -39,8 +39,8 @@ fprintf('Event listing loaded\n');
 overall_listing = cell([2,length(template_list(:,1))]);
 %Narrowing down focus to individual stations and channels
 for template_count = 1:length(template_list(:,1));
-    single_template = template_list(template_count,:);
-    template = template_list(template_count,1).template;
+    single_template = template_list{template_count};
+    
     template_listing = cell([2,length(single_template)]);
     overall_listing{1,template_count} = template;
     overall_listing{2,template_count} = template_listing;
@@ -50,7 +50,7 @@ for template_count = 1:length(template_list(:,1));
         
         station_specific_template = single_template(station_count);
         numberofchannels = length(station_specific_template.channel_list);
-        %template = station_specific_template.template;
+        template = station_specific_template.template;
         station = station_specific_template.station;
         network = station_specific_template.network;
         phase = station_specific_template.trigger;

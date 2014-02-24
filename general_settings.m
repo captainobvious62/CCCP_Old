@@ -19,8 +19,8 @@ javaaddpath(sprintf('%s/IRIS-WS-2.0.4.jar',base_folder));
 month_length = [31,28,31,30,31,30,31,31,30,31,30,31];
 
 %Starting Date/Time
-start_year = 2008;
-start_month = 03;
+start_year = 2010;
+start_month = 12;
 start_day = 01;
 start_minute = 00;
 start_second = 00;
@@ -33,7 +33,7 @@ start_second = 00;
 
 
 %Ending Date/Time
-end_year = 2011;
+end_year = 2012;
 end_month = 01;
 end_day = 01;
 end_minute = 00;
